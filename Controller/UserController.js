@@ -1,7 +1,7 @@
-//import moment from "moment.js";
+
 
 import prisma from "../DB/db.config.js";
-import { format } from "date-fns";
+
 
 
 function getTimeStamp() {
@@ -11,6 +11,7 @@ function getTimeStamp() {
   console.log(typeof dateUTC);
   return dateUTC;
 }
+
 
 //* Fetch Singale User
 export const fetchSingleUser = async (req, res) => {
@@ -22,7 +23,8 @@ export const fetchSingleUser = async (req, res) => {
       },
     });
     res.json({ status: 200, data: singleUser });
-  } catch (err) {
+  } 
+  catch (err) {
     console.log(err);
   }
 };
@@ -30,11 +32,21 @@ export const fetchSingleUser = async (req, res) => {
 //*Fetch All User
 export const fetchUser = async (req, res) => {
   try {
-    const allUsers = await prisma.user.findMany({}); //it is return all users in array
+    const allUsers = await prisma.user.findMany({
+      include:{
+        _count:{
+          select:{
+            post:true,
+            comment:true
+          }
+        }
+      }
+    }); //it is return all users in array
 
     res.json({ status: 200, data: allUsers });
-  } catch (err) {
-    console.log(err);
+  }
+  catch (err) { 
+    console.log("Error=", err.message);
   }
 };
 
@@ -65,7 +77,7 @@ export const createUser = async (req, res) => {
         email,
         password,
         created_at:getTimeStamp()
-        //created_at:format(new Date(), "yyyy-MM-dd HH:mm:ss", {timeZone: "Asia/Kolkata"}),
+        
       },
     });
     return res.json({ status: 200, data: newUser, message: "New User Created" });
@@ -74,6 +86,7 @@ export const createUser = async (req, res) => {
     console.log("Error=", err.message);
   }
 };
+
 
 //*Update User
 export const updateUser = async (req, res) => {
@@ -93,7 +106,7 @@ export const updateUser = async (req, res) => {
     });
     res.json({ status: 200, message: "User updated successfully" });
   } catch (err) {
-    console.log(err);
+    console.log("Error=", err.message);
   }
 };
 
@@ -109,6 +122,6 @@ export const deleteUser = async (req, res) => {
     });
     res.json({ status: 200, message: `ID Number${userId} is Deleted` });
   } catch (err) {
-    console.log(err);
+    console.log("Error=", err.message);
   }
 };
