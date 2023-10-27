@@ -1,4 +1,5 @@
 import prisma from "../DB/db.config.js";
+import getTimeStamp from "../timeStamp.js";
 
 //* Create Post
 export const createPost = async (req, res) => {
@@ -10,8 +11,11 @@ export const createPost = async (req, res) => {
         user_id: Number(user_id),
         title,
         description,
+        created_at: getTimeStamp(),
       },
     });
+
+
     return res.json({ status: 200, data: newPost,message:"New Post Created" });
   } catch (error) {
     console.log("Error=", error.message);

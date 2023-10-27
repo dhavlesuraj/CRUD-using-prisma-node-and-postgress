@@ -1,16 +1,17 @@
 
 
 import prisma from "../DB/db.config.js";
+import getTimeStamp from "../timeStamp.js";
 
 
+// function getTimeStamp() {
+//   var dateUTC = new Date();
+//   dateUTC.setHours(dateUTC.getHours() + 5);
+//   dateUTC.setMinutes(dateUTC.getMinutes() + 30);
+//   console.log(typeof dateUTC);
+//   return dateUTC;
+// }
 
-function getTimeStamp() {
-  var dateUTC = new Date();
-  dateUTC.setHours(dateUTC.getHours() + 5);
-  dateUTC.setMinutes(dateUTC.getMinutes() + 30);
-  console.log(typeof dateUTC);
-  return dateUTC;
-}
 
 
 //* Fetch Singale User
@@ -46,7 +47,7 @@ export const fetchUser = async (req, res) => {
     res.json({ status: 200, data: allUsers });
   }
   catch (err) { 
-    console.log("Error=", err.message);
+    console.log("Fech all user Error=", err.message);
   }
 };
 
@@ -83,7 +84,7 @@ export const createUser = async (req, res) => {
     return res.json({ status: 200, data: newUser, message: "New User Created" });
   } 
   catch (err) {
-    console.log("Error=", err.message);
+    console.log("User Created Error=", err.message);
   }
 };
 
@@ -106,7 +107,7 @@ export const updateUser = async (req, res) => {
     });
     res.json({ status: 200, message: "User updated successfully" });
   } catch (err) {
-    console.log("Error=", err.message);
+    console.log("User updated Error=", err.message);
   }
 };
 
@@ -115,13 +116,13 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    await prisma.user.delete({
+  const data=  await prisma.user.delete({
       where: {
         id: Number(userId),
       },
     });
     res.json({ status: 200, message: `ID Number${userId} is Deleted` });
   } catch (err) {
-    console.log("Error=", err.message);
+    console.log("User Deleted Error=", err.message);
   }
 };

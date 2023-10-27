@@ -4,8 +4,6 @@ const app=express();
 const PORT=process.env.PORT || 5000
 
 
-//* Middalware
-
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
@@ -16,7 +14,6 @@ app.get('/', function(req, res) {
 
 //* Route File
 import routes from './routes/index.js';
-
 app.use(routes);
 
 

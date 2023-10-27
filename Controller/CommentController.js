@@ -1,5 +1,6 @@
 
 import prisma from "../DB/db.config.js";
+import getTimeStamp from "../timeStamp.js"
 
 //Create Comments
 
@@ -22,7 +23,8 @@ export const createComment = async (req, res) => {
           data: {
             user_id: Number(user_id),
             post_id: Number(post_id),
-            comment
+            comment,
+            created_at: getTimeStamp(),
           },
         });
     return res.json({status:200, data:newComment, message:"new comment uplode successfully"});
