@@ -1,5 +1,5 @@
 
-
+import bcrypt from "bcrypt";
 import prisma from "../DB/db.config.js";
 import getTimeStamp from "../timeStamp.js";
 
@@ -67,18 +67,21 @@ export const createUser = async (req, res) => {
         message: "Email Alredy Taken,Plese Anather Email.",
       });
     }
+       //* For password Security
+    const salt=await bcrypt.genSalt(10);
+    const securePassword= await bcrypt.hash(req.body.password,salt);
 
     const newUser = await prisma.user.create({
       data: {
         // name:name,
         // email:email,
-        // password:password
+        // password:securePassword,
+        // created_at:getTimeStamp()
         //OR
         name,
         email,
-        password,
-        created_at:getTimeStamp()
-        
+        password:securePassword,
+        created_at: getTimeStamp(),
       },
     });
     return res.json({ status: 200, data: newUser, message: "New User Created" });

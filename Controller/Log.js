@@ -28,11 +28,12 @@ try {
         route:req.url,
         created_at: getTimeStamp(),
         taken_time: taken_time,
+        more_data: "more data",
         method:req.method
-      },
+      }
    });
    //res.send({ status: 200, data: newLogger ,message:"new Logger created"});
-   res.end("new log created");
+   //res.end("new log created");
    next();
   } catch (error) {
     console.log("Logger created Error=", error);
