@@ -1,3 +1,12 @@
+
+// function getTimeStamp() {
+//   var dateUTC = new Date();
+//   dateUTC.setHours(dateUTC.getHours() + 5);
+//   dateUTC.setMinutes(dateUTC.getMinutes() + 30);
+//   console.log(typeof dateUTC);
+//   return dateUTC;
+// }
+
 function isUTC0530(dateUTC) {
   // Get the time zone offset in minutes
   const timezoneOffset = dateUTC.getTimezoneOffset();
@@ -11,7 +20,6 @@ function getTimeStamp() {
     //console.log("The date is not in UTC+05:30 timezone.");
     dateUTC.setHours(dateUTC.getHours() + 5);
     dateUTC.setMinutes(dateUTC.getMinutes() + 30);
-    //console.log(typeof dateUTC);
     //console.log(dateUTC);
     return dateUTC;
   } else {

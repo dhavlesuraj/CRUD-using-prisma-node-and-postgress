@@ -9,7 +9,7 @@ app.use(express.urlencoded({extended:false}));
 
 //* Connect to Server
 app.get('/', function(req, res) {
-    res.send("Rendering file")
+    res.send("Connected To server Successfully");
 });
 
 //* Route File

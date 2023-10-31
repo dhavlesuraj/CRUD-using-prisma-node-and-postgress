@@ -9,17 +9,17 @@ import limiter from "../Middal/middleware.js";
 const router=Router();
 //*Middalware
 //router.use(logResponseTime);
-
+        
 //For User Routes
-router.use("/api/user", logResponseTime,UserRoutes);
+router.use("/api/user", UserRoutes);
 
 //For Post Routes
-router.use("/api/post", logResponseTime,PostRoute);
+router.use("/api/post",PostRoute);
 
 // For Comment Routes
-router.use("/api/comment",logResponseTime,CommentRoute);
+router.use("/api/comment",CommentRoute);
 
 // For User Login
-router.use("/api/userLogin", limiter, Loginuser);
+router.use("/api/userLogin",Loginuser);
 
 export default router;

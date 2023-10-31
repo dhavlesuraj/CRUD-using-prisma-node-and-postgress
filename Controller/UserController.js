@@ -2,16 +2,7 @@
 import bcrypt from "bcrypt";
 import prisma from "../DB/db.config.js";
 import getTimeStamp from "../timeStamp.js";
-
-
-// function getTimeStamp() {
-//   var dateUTC = new Date();
-//   dateUTC.setHours(dateUTC.getHours() + 5);
-//   dateUTC.setMinutes(dateUTC.getMinutes() + 30);
-//   console.log(typeof dateUTC);
-//   return dateUTC;
-// }
-
+import logResponseTime from "./Log.js";
 
 
 //* Fetch Singale User
@@ -23,6 +14,7 @@ export const fetchSingleUser = async (req, res) => {
         id: Number(userId),
       },
     });
+    logResponseTime(req,res);
     res.json({ status: 200, data: singleUser });
   } 
   catch (err) {
@@ -42,8 +34,8 @@ export const fetchUser = async (req, res) => {
           }
         }
       }
-    }); //it is return all users in array
-
+    }); //it is return all users in array 
+    logResponseTime(req,res);
     res.json({ status: 200, data: allUsers });
   }
   catch (err) { 
@@ -54,8 +46,7 @@ export const fetchUser = async (req, res) => {
 //*Create User
 export const createUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body; //destructuring
-
+    const { name, email} = req.body; //destructuring
     const findUser = await prisma.user.findUnique({
       where: {
         email: email,
@@ -69,7 +60,7 @@ export const createUser = async (req, res) => {
     }
        //* For password Security
     const salt=await bcrypt.genSalt(10);
-    const securePassword= await bcrypt.hash(req.body.password,salt);
+    const securePassword= await bcrypt.hash(req.body.password,salt); 
 
     const newUser = await prisma.user.create({
       data: {
@@ -82,8 +73,9 @@ export const createUser = async (req, res) => {
         email,
         password:securePassword,
         created_at: getTimeStamp(),
-      },
-    });
+      }
+    })
+    logResponseTime(req,res);
     return res.json({ status: 200, data: newUser, message: "New User Created" });
   } 
   catch (err) {
@@ -108,6 +100,7 @@ export const updateUser = async (req, res) => {
         password,
       },
     });
+    logResponseTime(req,res);
     res.json({ status: 200, message: "User updated successfully" });
   } catch (err) {
     console.log("User updated Error=", err.message);

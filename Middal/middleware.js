@@ -20,7 +20,7 @@ import { rateLimit } from "express-rate-limit";
 // }
 
 const limiter = rateLimit({
-  windowMs:5*60 * 1000,
+  windowMs:5*60 * 1000,            // 5 minit block
   max: 5,
   message: "You have exceeded your 5 requests per minute limit.",
   headers: true,

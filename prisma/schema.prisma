@@ -77,3 +77,27 @@ model logger1{
   method String
 }
 
+model logger2{
+  id Int @id @default(autoincrement())
+  request String?
+  response String?
+  route String?
+  created_at DateTime
+  taken_time DateTime
+  more_data String?
+  method String?
+}
+
+model logger3{
+  id Int @id @default(autoincrement())
+  request String?
+  response String?
+  route String?
+  created_at DateTime
+  taken_time Float
+  more_data String?
+  method String?
+}
+
+
+

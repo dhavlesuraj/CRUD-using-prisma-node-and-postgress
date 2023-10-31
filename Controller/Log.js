@@ -1,43 +1,31 @@
+import { json } from "express";
 import prisma from "../DB/db.config.js";
 import getTimeStamp from "../timeStamp.js";
 
-
-function logResponseTime(req, res, next) {
+function logResponseTime(req, res){
+  try {
   console.log(getTimeStamp());
   console.log(req.body);
-try {
-  const url=console.log(`${req.method} ${req.originalUrl} [STARTED]`);
-
-  res.on("finish", () => {
-    console.log(`${req.method} ${req.originalUrl} [FINISHED]`);
-  });
-
-  res.on("close", () => {
-    console.log(`${req.method} ${req.originalUrl} [CLOSED]`);
-  });
-  const startTime = process.hrtime();
-
-    const taken_time=res.on("finish", () => {
-      const elapsedHrTime = process.hrtime(startTime);
-      const elapsedTimeInMs = elapsedHrTime[0] * 1000 + elapsedHrTime[1] / 1e6;
-      console.log("%s : %fms", req.path, elapsedTimeInMs);
+  const data=req.body;
+    const startTime = process.hrtime();
+    res.on("finish", async () => {
+      const totalTime = process.hrtime(startTime);
+      const totalTimeInMs = totalTime[0] * 1000 + totalTime[1] / 1e6;
+      console.log("%fms", totalTimeInMs);
+      
+      const createLog = await prisma.logger3.create({
+        data: {
+          request: JSON.stringify(data),
+          route: req.originalUrl,
+          created_at: getTimeStamp(),
+          taken_time: totalTimeInMs,
+          method: req.method,
+        },
+      });
+      //res.json({status:"success",data:createLog,message:"log handale successfully"});
     });
-    
-    const newLogger =prisma.logger1.create({
-      data: {
-        route:req.url,
-        created_at: getTimeStamp(),
-        taken_time: taken_time,
-        more_data: "more data",
-        method:req.method
-      }
-   });
-   //res.send({ status: 200, data: newLogger ,message:"new Logger created"});
-   //res.end("new log created");
-   next();
   } catch (error) {
     console.log("Logger created Error=", error);
   }
-}
-
+};
 export default logResponseTime;

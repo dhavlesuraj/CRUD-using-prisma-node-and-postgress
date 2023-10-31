@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import prisma from "../DB/db.config.js";
-import { setUser } from "../Authentication/auth.js";
-import { isMatch } from "date-fns";
+import logResponseTime from "./Log.js";
+
 
 export const loginuser = async (req, res) => {
   try {
@@ -25,17 +25,12 @@ export const loginuser = async (req, res) => {
           })
         }
       } else {
-        res.json({ status: "failed", message: "You are not Register User" });
+        res.json({ status: 400, message: "You are not Register User" });
       }
-
-      // const sessionId = uuidv4();
-      // //console.log("session=",sessionId);
-      // setUser(sessionId, findUser);
-      // res.cookie("uid", sessionId);
-      // return res.json({ status: 200, message: "User Login Succsessfully" });
     } else {
       res.json({ status: "failed", message: "All Fields are Requir" });
     }
+    logResponseTime(req,res);
   } catch (error) {
     console.log("Login Message=", error);
   }
