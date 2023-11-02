@@ -1,28 +1,39 @@
-import { rateLimit } from "express-rate-limit";
+//import { rateLimit } from "express-rate-limit";
+const reqCount = {};
+function limiter(req, res, next) {
+  const ipAddress = req.ip;
+  const limit = 5;
+  const windowMs = 60000;
 
-//  async function limiter(req,res,next){
-//   console.log(req.body);
-//   const {email,password}=req.body;
-//   let count=0;
-//       if (email && password) {
-//       const findUser = await prisma.user.findUnique({
-//         where: {
-//           email: email,
-//           password: password,
-//         },
-//       });
-//       count++;
-//       if (!findUser && count<5) {
-        
-//       }
-//   next()
-// }
-// }
+  if (!reqCount[ipAddress]) {
+    reqCount[ipAddress] = {
+      count: 1,
+      timeStamp: Date.now(),
+    };
+  } else {
+    const currantTime = Date.now();
+    const lastReqTime = reqCount[ipAddress].timeStamp;
 
-const limiter = rateLimit({
-  windowMs:5*60 * 1000,            // 5 minit block
-  max: 5,
-  message: "You have exceeded your 5 requests per minute limit.",
-  headers: true,
-});
- export default limiter;
+    if (currantTime - lastReqTime <= windowMs) {
+      if (reqCount[ipAddress].count >= limit) {
+        return res.status(429).json({ message: "Rate limit exceeded" });
+      } else {
+        reqCount[ipAddress].count++;
+      }
+    } else {
+      reqCount[ipAddress] = {
+        count: 1,
+        timeStamp: currantTime,
+      };
+    }
+  }
+  next();
+}
+    //* Or *// using thaird party command
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, // 15 minit block
+//   max: 5,
+//   message: "You have exceeded your 5 reqs per minute limit.",
+//   headers: true,
+// });
+export default limiter;

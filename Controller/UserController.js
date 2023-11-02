@@ -14,6 +14,9 @@ export const fetchSingleUser = async (req, res) => {
         id: Number(userId),
       },
     });
+    if(!singleUser){
+      res.json({status:"failed",message:"User Not Found"});
+    }
     logResponseTime(req,res);
     res.json({ status: 200, data: singleUser });
   } 

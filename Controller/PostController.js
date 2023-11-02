@@ -14,8 +14,7 @@ export const createPost = async (req, res) => {
         created_at: getTimeStamp(),
       },
     });
-
-
+    
     return res.json({ status: 200, data: newPost,message:"New Post Created" });
   } catch (error) {
     console.log("Error=", error.message);

@@ -20,6 +20,6 @@ router.use("/api/post",PostRoute);
 router.use("/api/comment",CommentRoute);
 
 // For User Login
-router.use("/api/userLogin",Loginuser);
+router.use("/api/userLogin", limiter,Loginuser);
 
 export default router;

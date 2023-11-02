@@ -10,85 +10,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
+model user{
   id Int @id @default(autoincrement())
   name String?
   email String @unique
   password String?
-  post Post[]
-  comment Comment[]
-  taken_time log[]
+  post post[]
+  comment comment[]
   created_at DateTime 
 }
-model Post{
+model post{
   id Int @id @default(autoincrement())
-  user User @relation(fields: [user_id],references: [id], onDelete: Cascade)
+  user user @relation(fields: [user_id],references: [id], onDelete: Cascade)
   user_id Int
   title String
   description String
   comment_count Int @default(0)
   created_at DateTime 
-  comment Comment[]
+  comment comment[]
 }
 
-model Comment{
+model comment{
   id Int @id @default(autoincrement())
-  post Post @relation(fields: [post_id],references: [id],onDelete: Cascade)
+  post post @relation(fields: [post_id],references: [id],onDelete: Cascade)
   post_id Int
-  user User @relation(fields: [user_id],references: [id],onDelete: Cascade)
+  user user @relation(fields: [user_id],references: [id],onDelete: Cascade)
   user_id Int
   comment String
   created_at DateTime
 
 }
 
-model log{
-  id Int @id @default(autoincrement())
-  user User @relation(fields: [user_id],references: [id], onDelete: Cascade)
-  user_id Int
-  request String
-  response String
-  route String
-  taken_time DateTime @default(now())
-  created_at DateTime
-  more_data String?
-  method String
-}
 
-model logger{
-  id Int @id @default(autoincrement())
-  request String?
-  response String?
-  route String
-  created_at DateTime
-  taken_time DateTime @default(now())
-  more_data String?
-  method String
-}
 
-model logger1{
-  id Int @id @default(autoincrement())
-  request String?
-  response String?
-  route String
-  created_at DateTime
-  taken_time DateTime @default(now())
-  more_data String?
-  method String
-}
-
-model logger2{
-  id Int @id @default(autoincrement())
-  request String?
-  response String?
-  route String?
-  created_at DateTime
-  taken_time DateTime
-  more_data String?
-  method String?
-}
-
-model logger3{
+model logg{
   id Int @id @default(autoincrement())
   request String?
   response String?
