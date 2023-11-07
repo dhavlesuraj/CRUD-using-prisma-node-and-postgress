@@ -3,7 +3,7 @@ const reqCount = {};
 function limiter(req, res, next) {
   const ipAddress = req.ip;
   const limit = 5;
-  const windowMs = 60000;
+  const windowMs = 5 * 60 * 1000;
 
   if (!reqCount[ipAddress]) {
     reqCount[ipAddress] = {
@@ -29,7 +29,7 @@ function limiter(req, res, next) {
   }
   next();
 }
-    //* Or *// using thaird party command
+     //* Or *// using thaird party command
 // const limiter = rateLimit({
 //   windowMs: 15 * 60 * 1000, // 15 minit block
 //   max: 5,

@@ -13,6 +13,14 @@ export const fetchSingleUser = async (req, res) => {
       where: {
         id: Number(userId),
       },
+      include:{
+        post:{
+         select:{
+          title:true,
+          comment:true
+         }
+        }
+      }
     });
     if(!singleUser){
       res.json({status:"failed",message:"User Not Found"});
@@ -28,15 +36,15 @@ export const fetchSingleUser = async (req, res) => {
 //*Fetch All User
 export const fetchUser = async (req, res) => {
   try {
-    const allUsers = await prisma.user.findMany({
-      include:{
-        _count:{
-          select:{
-            post:true,
-            comment:true
-          }
-        }
-      }
+    const allUsers = await prisma.skill.findMany({
+      // include:{
+      //   _count:{
+      //     select:{
+      //       post:true,
+      //       comment:true
+      //     }
+      //   }
+      // }
     }); //it is return all users in array 
     logResponseTime(req,res);
     res.json({ status: 200, data: allUsers });

@@ -19,7 +19,7 @@ export const loginuser = async (req, res) => {
         if ((findUser.email === email) && isMatch) {
           res.json({ status: "success", message: "User Login Successfully" });
         } else {
-          res.json({
+          res.status(401).json({
             status: "failed",
             message: "Email or Password is not Valid",
           })
@@ -28,7 +28,7 @@ export const loginuser = async (req, res) => {
         res.json({ status: 400, message: "You are not Register User" });
       }
     } else {
-      res.json({ status: "failed", message: "All Fields are Requir" });
+      res.Status(401).json({ status: "failed", message: "All Fields are Requir" });
     }
     logResponseTime(req,res);
   } catch (error) {

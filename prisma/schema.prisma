@@ -41,8 +41,6 @@ model comment{
 
 }
 
-
-
 model logg{
   id Int @id @default(autoincrement())
   request String?
@@ -52,6 +50,42 @@ model logg{
   taken_time Float
   more_data String?
   method String?
+}
+
+model concept{
+  id Int @id @default(autoincrement())
+  concept String 
+  is_deleted Int @default(0)
+  description String
+}
+
+model skill{
+  id Int @id @default(autoincrement())
+  subject_id Int
+  skill_name String
+  skill_definition String
+  img_link String
+  video_link String
+  is_active String
+  beginner_lower_sal Int
+  beginner_upper_sal Int
+  beginner_jobs String
+  intermediate_lower_sal Int
+  intermediate_upper_sal Int
+  intermediate_jobs String
+  advanced_lower_sal Int
+  advanced_upper_sal Int
+  advanced_jobs String
+  created_at DateTime
+  updated_at DateTime
+  is_deleted Int
+  skill_description String
+  thumbnail_link String
+  slug String
+  meta_tag_c__c String?
+  meta_description_c__c String?
+  meta_skill_description__c String?
+  
 }
 
 

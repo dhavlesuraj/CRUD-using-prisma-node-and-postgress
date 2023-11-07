@@ -21,10 +21,11 @@
     "express-rate-limit": "^7.1.2",
     "luxon": "^3.4.3",
     "moment": "^2.29.4",
+    "pg": "^8.11.3",
     "rate-limiter-flexible": "^3.0.2",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "prisma": "^5.4.2"
+    "prisma": "^5.5.2"
   }
 }
