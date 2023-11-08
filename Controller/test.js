@@ -830,7 +830,7 @@ let concept_arr = [];
 arr.forEach((ele) => {
   if (skills.includes(ele)) {
     skill_arr.push(ele);
-    fs.writeFile("skill_data.txt", JSON.stringify(skill_arr)+'\n', (err) => {
+    fs.writeFile("skill_data.txt", JSON.stringify(skill_arr), (err) => {
       console.log("error=", err);
     });
   } else {

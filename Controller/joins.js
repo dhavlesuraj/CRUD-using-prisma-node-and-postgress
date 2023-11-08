@@ -5,9 +5,9 @@ import fs from "fs";
 
 export const fetchMatchUser = async (req, res) => {
   try {
-
+    const is_deleted=0;
     const data =
-    await prisma.$queryRaw`select public.concept.concept,public.concept.is_deleted,public.skill.skill_name,
+    await prisma.$queryRaw`SELECT public.concept.concept,public.skill.is_deleted,public.skill.skill_name,
     public.skill.skill_description from public.concept Left Join skill ON concept.skill_id = public.skill.id`;
     res.json({ status: 200, data: data });
     fs.writeFile("./skill&concept Data.txt",JSON.stringify(data),(error)=>{
