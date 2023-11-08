@@ -33,7 +33,7 @@ export const fetchSingleUser = async (req, res) => {
 //*Fetch All User
 export const fetchUser = async (req, res) => {
   try {
-    const allUsers = await prisma.skill.findMany({
+    const allUsers = await prisma.user.findMany({
       // include:{
       //   _count:{
       //     select:{
@@ -101,6 +101,10 @@ export const updateUser = async (req, res) => {
     const userId = req.params.id; //return string
     const { name, email, password } = req.body;
 
+    //* For password Security
+    const salt = await bcrypt.genSalt(10);
+    const securePassword = await bcrypt.hash(password, salt);
+
     await prisma.user.update({
       where: {
         id: Number(userId), //id converted to number
@@ -108,7 +112,7 @@ export const updateUser = async (req, res) => {
       data: {
         name,
         email,
-        password,
+        password:securePassword,
       },
     });
     logResponseTime(req, res);

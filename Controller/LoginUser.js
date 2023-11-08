@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+
 import bcrypt from "bcrypt";
 import prisma from "../DB/db.config.js";
 import logResponseTime from "./Log.js";
@@ -12,10 +12,7 @@ export const loginuser = async (req, res) => {
         where: { email: email }
       })
       if (findUser != null) {
-        const isMatch = await bcrypt.compare(
-          password,
-          findUser.password
-        )
+        const isMatch = await bcrypt.compare( password,findUser.password)
         if ((findUser.email === email) && isMatch) {
           res.json({ status: "success", message: "User Login Successfully" });
         } else {
