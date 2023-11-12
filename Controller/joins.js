@@ -5,10 +5,10 @@ import fs from "fs";
 
 export const fetchMatchUser = async (req, res) => {
   try {
-    const is_deleted=0;
+    const isDelete=0;
     const data =
-    await prisma.$queryRaw`SELECT public.concept.concept,public.skill.is_deleted,public.skill.skill_name,
-    public.skill.skill_description from public.concept Left Join skill ON concept.skill_id = public.skill.id`;
+      await prisma.$queryRaw`SELECT public.concept.concept,public.concept.is_deleted,public.skill.skill_name,
+    public.skill.skill_description from public.concept Left Join skill ON concept.skill_id = public.skill.id WHERE public.concept.is_deleted = ${isDelete}`;
     res.json({ status: 200, data: data });
     fs.writeFile("./skill&concept Data.txt",JSON.stringify(data),(error)=>{
         console.log("skill and concept left join data is not save in file",error);

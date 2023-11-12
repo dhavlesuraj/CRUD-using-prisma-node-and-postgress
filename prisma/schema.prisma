@@ -17,6 +17,7 @@ model user{
   password String?
   post post[]
   comment comment[]
+  userlogin userlogin[]
   created_at DateTime 
 }
 model post{
@@ -29,6 +30,7 @@ model post{
   created_at DateTime 
   comment comment[]
 }
+
 
 model comment{
   id Int @id @default(autoincrement())
@@ -87,6 +89,16 @@ model skill{
   meta_skill_description__c String?
   
 }
+
+model userlogin{
+  id Int @id @default(autoincrement())
+  user user @relation(fields: [user_id],references: [id], onDelete: Cascade)
+  user_id Int 
+  token String 
+  taken_time DateTime
+  status Int @default(1)
+}
+
 
 
 

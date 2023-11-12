@@ -63,7 +63,7 @@ export const createUser = async (req, res) => {
     if (findUser) {
       return res.json({
         status: 400,
-        message: "Email Alredy Taken,Plese Anather Email.",
+        message: "Email Already Taken,Please Anther Email.",
       });
     }
     //* For password Security
@@ -80,7 +80,7 @@ export const createUser = async (req, res) => {
           name,
           email,
           password: securePassword,
-          created_at: getTimeStamp(),
+          created_at: getTimeStamp(new Date()),
         },
       });
     logResponseTime(req, res);

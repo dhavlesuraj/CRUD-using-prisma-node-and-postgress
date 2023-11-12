@@ -1,7 +1,7 @@
-import { json } from "express";
+
 import prisma from "../DB/db.config.js";
 import getTimeStamp from "../timeStamp.js";
-import { stringify } from "uuid";
+
 
 function logResponseTime(req, res) {
   try {
@@ -23,10 +23,9 @@ function logResponseTime(req, res) {
       //     method: req.method,
       //   },
       // });
-      //res.json({status:"success",data:createLog,message:"log handale successfully"});
     });
   } catch (error) {
-    console.log("Logger created Error=", error);
+    console.log("Logger created Error=", error.message);
   }
 }
 export default logResponseTime;

@@ -4,7 +4,7 @@ export function setUser(id,user){
     sessionIdToUserMap.set(id,user);
 }
 
-export function getUser(id,user){
-   return sessionIdToUserMap.get(id,user);
+export function getUser(id){
+    return sessionIdToUserMap.get(id);
 }
 

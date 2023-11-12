@@ -8,7 +8,7 @@ export const createComment = async (req, res) => {
     try {
         const { user_id, post_id, comment } = req.body;
         
-        //* Increase the comment  count
+        //* Increase the comment_count
         await prisma.post.update({
             where:{
                 id:Number(post_id)
@@ -92,7 +92,7 @@ try {
     },
     data: {
       comment_count: {
-        increment: 1,
+        decrement: 1,
       },
     },
   });

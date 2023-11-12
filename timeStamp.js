@@ -13,8 +13,8 @@ function isUTC0530(dateUTC) {
   // For UTC+05:30, the offset should be -330 minutes (-5 hours and 30 minutes)
   return timezoneOffset === -330;
 }
-function getTimeStamp() {
-  const dateUTC = new Date();
+function getTimeStamp(dateUTC) {
+  //const dateUTC = new Date();
   //console.log(dateUTC);
   if (isUTC0530(dateUTC)) {
     //console.log("The date is not in UTC+05:30 timezone.");
