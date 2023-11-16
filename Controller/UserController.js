@@ -84,11 +84,8 @@ export const createUser = async (req, res) => {
         },
       });
     logResponseTime(req, res);
-    return res.json({
-      status: 200,
-      data: newUser,
-      message: "New User Created",
-    });
+    //return res.json({status: 200,data: newUser,message: "New User Created"});
+    return res.redirect("/"); 
   }else return res.json({status:"failed",message:"All field are required!!"});
   } catch (err) {
     console.log("User Created Error=", err.message);

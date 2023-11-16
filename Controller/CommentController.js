@@ -24,7 +24,7 @@ export const createComment = async (req, res) => {
             user_id: Number(user_id),
             post_id: Number(post_id),
             comment,
-            created_at: getTimeStamp(),
+            created_at: getTimeStamp(new Date()),
           },
         });
     return res.json({status:200, data:newComment, message:"new comment uplode successfully"});
@@ -81,7 +81,7 @@ export const updateComment = async (req, res) => {
   }
 };
 
-//*Delete Post
+//*Delete comment
 export const deleteComment=async(req,res)=>{
 try {
   const commentId = req.params.id;
