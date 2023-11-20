@@ -5,7 +5,7 @@ import logResponseTime from "./Log.js";
 import getTimeStamp from "../timeStamp.js";
 import { setUser } from "../Authentication/auth.js";
 
-
+const secretKey="mynameissuraj";
 export const loginuser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -23,15 +23,13 @@ export const loginuser = async (req, res) => {
     }
     const isMatch = await bcrypt.compare(password, findUser.password);
     if (!isMatch) {
-      res.json({
-        status: "failed",
-        message: "please try to login with correct credential",
-      });
+      res.json({status: "failed",message: "please try to login with correct credential"});
     }
+ 
     const sessionId = uuidv4();
-    res.cookie("uid",sessionId,{httpOnly:true,secure: true,maxAge:3*60*1000});
+    res.cookie("uid",sessionId,{httpOnly:true,secure: false,maxAge:1*60*60*1000});
     setUser(sessionId,findUser);
-   
+   console.log(sessionId);
     await prisma.userlogin.create({
       data: {
         user_id: findUser.id,
@@ -39,8 +37,8 @@ export const loginuser = async (req, res) => {
         taken_time: getTimeStamp(new Date())
       },
     });
-    //return res.json({ status: 200, message: "User Login Successfully" });
-    return res.redirect("/authorize");    
+    return res.status(200).json({ message: "user are logIn successfully" });
+    //return res.redirect("/authorize");    
   } catch (error) {
     console.log("Login Message=", error);
   }

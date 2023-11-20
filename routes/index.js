@@ -10,6 +10,7 @@ import {isAuthenticatedUser} from "../Middal/loginMiddal.js"
 import getTimeStamp from "../timeStamp.js";
 import  LogOutUser  from './logOutUserRoute.js';
 import cookieParser from "cookie-parser";
+import AuthUSer from "./authUserRoute.js";
 
 const router=Router();
 router.use(cookieParser());
@@ -44,5 +45,7 @@ router.use("/api/userLogin", limiter, Loginuser);
 //For User LogOut
 router.use("/api/logout", LogOutUser);
 //For fetchMatchUser
-router.use("/api/fetchMatchUser", fetchMatchUser);
+router.use("/api/fetchMatchUser",isAuthenticatedUser, fetchMatchUser);
+
+router.use("/api/authuser", isAuthenticatedUser, AuthUSer);
 export default router;
