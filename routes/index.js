@@ -3,30 +3,20 @@ import UserRoutes from "./userRoutes.js";
 import PostRoute from "./postRoute.js";
 import CommentRoute from "./commentsRoute.js"
 import Loginuser from "./loginUserRoute.js";
-import limiter from "../Middal/middleware.js";
+import limiter from "../Midalware/middleware.js";
 import { fetchMatchUser } from '../Controller/joins.js';
-import session from "express-session";
-import {isAuthenticatedUser} from "../Middal/loginMiddal.js"
-import getTimeStamp from "../timeStamp.js";
+import {isAuthenticatedUser} from "../Midalware/loginMiddal.js"
 import  LogOutUser  from './logOutUserRoute.js';
 import cookieParser from "cookie-parser";
 import AuthUSer from "./authUserRoute.js";
 
+
+
+
 const router=Router();
 router.use(cookieParser());
 
-// var sessionMW =(
-//   session({
-//     key:"uid",
-//     secret: "veer45afdcBank",
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: {
-//       maxAge: 1 * 60 * 1000,
-//       //expire: 1 * 60 * 1000 ,
-//     },
-//   })
-// );
+
 //*Middalware
 //router.use(logResponseTime);
         
@@ -43,9 +33,11 @@ router.use("/api/comment",CommentRoute);
 router.use("/api/userLogin", limiter, Loginuser);
 
 //For User LogOut
-router.use("/api/logout", LogOutUser);
-//For fetchMatchUser
-router.use("/api/fetchMatchUser",isAuthenticatedUser, fetchMatchUser);
+router.use("/api/logout",isAuthenticatedUser, LogOutUser);
 
+//For fetchMatchUser using session cookies
+router.use("/api/fetchMatchUser",isAuthenticatedUser, fetchMatchUser);
 router.use("/api/authuser", isAuthenticatedUser, AuthUSer);
+
+
 export default router;

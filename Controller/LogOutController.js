@@ -3,8 +3,8 @@ import prisma from "../DB/db.config.js";
 
 export const logOutUser = async (req, res) => {
   try {
-    const token = req.cookies?.uid;
-    //console.log("Session delete Id=", token);
+    const token = req.headers?.uid;
+    console.log("Session delete Id=", token);
     if (!token) {
       res.json({ status: 400, message: "Anauthoriesed user" });
     }
@@ -18,7 +18,7 @@ export const logOutUser = async (req, res) => {
         },
       });
     //return res.redirect("/");
-    //return res.json({status:"success",message:"user logout"})
+    return res.json({status:"success",message:"user logout"})
   } catch (error) {
     console.log("LogOut Message=", error);
   }

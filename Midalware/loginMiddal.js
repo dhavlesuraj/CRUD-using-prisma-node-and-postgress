@@ -4,7 +4,7 @@ import { getUser } from "../Authentication/auth.js";
 export const isAuthenticatedUser=(req,res,next)=>{
    const token = req.headers?.uid;
   if (!token) {
-    res.json({ status: 400, message: "Anauthoriesed user" });
+    res.json({ status: 400, message: "Please Login First"});
   }
   try {
     const user = getUser(token);

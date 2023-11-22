@@ -99,6 +99,12 @@ model userlogin{
   status Int @default(1)
 }
 
+model authtoken{
+  token_id Int @id @default(autoincrement())
+  jwt_token String 
+  created_at DateTime  
+}
+
 
 
 

@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cookieParser from "cookie-parser";
-import {isAuthenticatedUser} from "./Middal/loginMiddal.js"
+import {isAuthenticatedUser} from "./Midalware/loginMiddal.js";
 const app = express();
 const PORT = process.env.PORT || 5000;
 app.set("view engine", "ejs");

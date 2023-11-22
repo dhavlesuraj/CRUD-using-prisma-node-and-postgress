@@ -18,14 +18,15 @@ function validateNestedObj(obj){
     return true;
 }
 
-// function validString(req,res) {
-//   try {
-//     const jsonData=json.parse(req.body);
-//     validateNestedObj(jsonData);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+
+function validString(invalidJsonString) {
+  try {
+    const jsonData = json.parse(invalidJsonString);
+    validateNestedObj(jsonData);
+  } catch (error) {
+    console.log(error);
+  }
+}
 const nestedObject = {
   prop1: "value1",
   prop2: {
@@ -37,9 +38,13 @@ const nestedObject = {
   prop3: "value3",
 };
 
-const valid=validateNestedObj(nestedObject);
+var invalid = '{"name":"John", age:30, "city":"New York"}';
+const valid = validateNestedObj(invalid);
 //console.log(valid);
 
 // const myNum=Symbol("key1");
 // const user={[myNum]:"hello world"};
 // console.log(user[myNum]);
+
+// var invalidJsonString = '{"name":"John", age:30, "city":"New York"}';
+

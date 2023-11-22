@@ -1,13 +1,28 @@
 import { Router } from "express";
-import { createUser, deleteUser, fetchSingleUser, fetchUser, updateUser }from '../Controller/UserController.js';
-import { isAuthenticatedUser } from "../Middal/loginMiddal.js";
+import {
+  createUser,
+  deleteUser,
+  fetchSingleUser,
+  fetchAllUser,
+  updateUser,
+  jwtAuthLoginUser,
+  jwtGetAuthUserData,
+  jwtLogoutUser,
+} from "../Controller/UserController.js";
+import {fetchUser} from "../Midalware/JwtGetUser.js"
 
 const router=Router();
 
-router.get('/',fetchUser);
-router.get("/:id", isAuthenticatedUser,fetchSingleUser);
+router.get('/',fetchAllUser);
+router.get("/:id", fetchSingleUser);
 router.post("/",createUser);
 router.put('/:id',updateUser);
 router.delete('/:id',deleteUser);
+router.post("/jwtauthlogin", jwtAuthLoginUser);
+router.post("/getdata",fetchUser, jwtGetAuthUserData);
+router.post("/jwtlogout",fetchUser, jwtLogoutUser);
+
+
+
 
 export default router; 

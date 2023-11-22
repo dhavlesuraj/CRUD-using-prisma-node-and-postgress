@@ -13,16 +13,16 @@ function logResponseTime(req, res) {
       const totalTimeInMs = totalTime[0] * 1000 + totalTime[1] / 1000000;
       //console.log("%f ms", totalTimeInMs);
 
-      // const createLog = await prisma.logg.create({
-      //   data: {
-      //     request: JSON.stringify(req.body),
-      //     response: JSON.stringify(res.statusCode),
-      //     route: req.originalUrl,
-      //     created_at: getTimeStamp(),
-      //     taken_time: totalTimeInMs,
-      //     method: req.method,
-      //   },
-      // });
+      const createLog = await prisma.logg.create({
+        data: {
+          request: JSON.stringify(req.body),
+          response: JSON.stringify(res.statusCode),
+          route: req.originalUrl,
+          created_at: getTimeStamp(new Date()),
+          taken_time: totalTimeInMs,
+          method: req.method,
+        },
+      });
     });
   } catch (error) {
     console.log("Logger created Error=", error.message);

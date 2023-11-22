@@ -5,7 +5,6 @@ import logResponseTime from "./Log.js";
 import getTimeStamp from "../timeStamp.js";
 import { setUser } from "../Authentication/auth.js";
 
-const secretKey="mynameissuraj";
 export const loginuser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -27,9 +26,7 @@ export const loginuser = async (req, res) => {
     }
  
     const sessionId = uuidv4();
-    res.cookie("uid",sessionId,{httpOnly:true,secure: false,maxAge:1*60*60*1000});
-    setUser(sessionId,findUser);
-   console.log(sessionId);
+    //console.log(sessionId);
     await prisma.userlogin.create({
       data: {
         user_id: findUser.id,
@@ -37,9 +34,15 @@ export const loginuser = async (req, res) => {
         taken_time: getTimeStamp(new Date())
       },
     });
+    res.cookie("uid",sessionId,{httpOnly:true,secure: false,maxAge:1*60*60*1000});
+    setUser(sessionId,findUser);
+    logResponseTime(req,res);
     return res.status(200).json({ message: "user are logIn successfully" });
     //return res.redirect("/authorize");    
   } catch (error) {
     console.log("Login Message=", error);
+    res.status(500).json("Internal server Error");
   }
 };
+
+//res.setHeader("Set-Cookie", "visited=true; Max-Age=3000; HttpOnly, Secure");
