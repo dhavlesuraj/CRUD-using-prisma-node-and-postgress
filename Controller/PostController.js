@@ -4,12 +4,11 @@ import getTimeStamp from "../timeStamp.js";
 //* Create Post
 export const createPost = async (req, res) => {
   try {
-    const { user_id, title, description } = req.body; //destructuring
-
-    
+    const userId = req.user.id;
+    const { title, description } = req.body; //destructuring
     const newPost = await prisma.post.create({
       data: {
-        user_id: Number(user_id),
+        user_id: userId,
         title,
         description,
         created_at: getTimeStamp(new Date()),

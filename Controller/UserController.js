@@ -56,7 +56,7 @@ export const fetchAllUser = async (req, res) => {
 export const createUser = async (req, res) => {
   try {
     const { name, email, password } = req.body; //destructuring
-    if(name !=null && email!=null && password!=null){
+    if(name !="" && email!="" && password!=""){
     const findUser = await prisma.user.findUnique({
       where: {
         email: email,
@@ -97,7 +97,7 @@ export const createUser = async (req, res) => {
 //*Update User
 export const updateUser = async (req, res) => {
   try {
-    const userId = req.params.id; //return string
+    const userId = req.user.id; //return string
     const { name, email, password } = req.body;
 
     //* For password Security
@@ -106,7 +106,7 @@ export const updateUser = async (req, res) => {
 
     await prisma.user.update({
       where: {
-        id: Number(userId), //id converted to number
+        id:userId,
       },
       data: {
         name,
@@ -143,7 +143,7 @@ const jwt_secret = "myNameIsJwt";
 export const jwtAuthLoginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if ((email && password) == null) {
+    if ((email && password) == "") {
       return res.json({ status: "failed", message: "All Fields are Require" });
     }
     const user = await prisma.user.findUnique({
@@ -168,7 +168,7 @@ export const jwtAuthLoginUser = async (req, res) => {
       },
     };
     const authToken = jwt.sign(data, jwt_secret);
-    console.log(authToken);
+    //console.log(authToken);
     await prisma.authtoken.create({
       data: {
         jwt_token: authToken,
@@ -182,16 +182,6 @@ export const jwtAuthLoginUser = async (req, res) => {
   }
 };
 
-export const jwtLogoutUser=async(req,res)=>{
-  var ip =
-    (req.headers["x-forwarded-for"] || "").split(",").pop().trim() ||
-    req.socket.remoteAddress;
-
-  console.log(ip);
-  res.send(ip);
-}
-
-
 
 //* fetch authentic user using jwt
 
@@ -202,11 +192,18 @@ export const jwtGetAuthUserData = async (req, res) => {
       where: {
         id: userId,
       },
+      select: {
+      id: true,
+      name: true,
+      email: true,
+      password: false,
+      created_at: true,
+      }
     });
     return res.send(userData);
   } catch (error) {
   console.log("get user data Message=", error);
-  res.status(500).send("Internal server Error");
+  res.status(500).json({error:"Internal server Error"});
   }
 };
 

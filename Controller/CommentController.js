@@ -6,7 +6,8 @@ import getTimeStamp from "../timeStamp.js"
 
 export const createComment = async (req, res) => {
     try {
-        const { user_id, post_id, comment } = req.body;
+      const userId=req.user.id;
+        const { post_id, comment } = req.body;
         
         //* Increase the comment_count
         await prisma.post.update({
@@ -21,7 +22,7 @@ export const createComment = async (req, res) => {
         });
         const newComment = await prisma.comment.create({
           data: {
-            user_id: Number(user_id),
+            user_id: userId,
             post_id: Number(post_id),
             comment,
             created_at: getTimeStamp(new Date()),

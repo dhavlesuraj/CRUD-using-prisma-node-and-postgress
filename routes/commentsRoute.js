@@ -1,4 +1,5 @@
 import { Router } from "express";
+import {fetchUser} from "../Midalware/JwtGetUser.js"
 import {
   createComment,
   fetchComment,
@@ -9,7 +10,7 @@ import {
 
 const router=Router();
 
-router.post("/",createComment);
+router.post("/", fetchUser,createComment);
 router.get("/:id", fetchComment);
 router.get("/",showComment);
 router.put("/:id", updateComment);
